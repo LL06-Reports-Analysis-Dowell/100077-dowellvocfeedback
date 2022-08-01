@@ -1,93 +1,51 @@
 {% extends 'feedback/base.html' %} {% block content %}
-<div class="container pt-5">
-  <div class="row">
-    <div class="col-md-4 offset-md-4">
-      <div class="card">
-        <div class="card-body">
-          <form method="POST" action="/submit_brand_details/">
-            {% csrf_token %}
-            <div style="height: 0px; overflow: hidden">
-              <input
-                type="file"
-                id="fileInput"
-                name="brand_picture"
-                accept="image/*"
-                required
-              />
-            </div>
-            <div class="form-group ml-5">
-              <div
-                style="
-                  height: 90px;
-                  width: 100px;
-                  border: 1px #000 solid;
-                  margin: 20px;
-                  margin-left: 50px;
-                "
-                onclick="chooseFile();"
-              >
-                <p class="" style="margin: 20px 20px 20px 20px">Upload Photo</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                id="brand_name"
-                name="brand_name"
-                value="{{ current_brand_name }}"
-                placeholder="Enter Brand Name"
-                required
-              />
-            </div>
-            <br />
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                id="product_name"
-                name="brand_product_name"
-                value="{{ current_product_name }}"
-                placeholder="Enter Product Name"
-                required
-              />
-            </div>
+<div class="mroot">
+  <br />
+  <div class="text-center bg-success">
+    <h5 style="margin: 20px" class="text-white">
+      Embed Code to your website to get Feedback
+    </h5>
+  </div>
+  <br />
+  <div class="header">Question</div>
+  <div class="pre" style="padding: 5px; font-size: 20px; width: 90%">
+    Do you want to rate &lt;<b>activity</b>&gt;experience from &lt;
+    <b>Brand</b>&gt; ?
+  </div>
 
-            <div class="form-group pt-5">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloribus iusto neque iure aspernatur blanditiis, reiciendis et
-                necessitatibus sint vel quis aliquam? Sapiente, cum qui et ut
-                reprehenderit magni exercitationem odit! Lorem ipsum dolor, sit
-                amet consectetur adipisicing elit. Vitae id cumque dolores nemo
-                adipisci omnis vero, facilis incidunt.
-              </p>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                Accept Terms and Conditions
-              </label>
-            </div>
-            <div class="text-center pt-5">
-              <button type="submit" class="btn btn-success">
-                Create Embedding Code.
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+  <div class="bcontainer" style="width: 100%">
+    <center>
+      <button class="sbutton">👎</button>
+      <button class="sbutton">😒</button>
+      <button class="sbutton"></button>
+      <button class="sbutton"></button>
+      <button class="sbutton"></button>
+      <button class="sbutton">😐</button>
+      <button class="sbutton"></button>
+      <button class="sbutton"></button>
+      <button class="sbutton"></button>
+      <button class="sbutton">😊</button>
+      <button class="sbutton">👍</button>
+    </center>
+  </div>
+
+  <br />
+
+  <hr style="color: red; background-color: red; height: 2; width: 100%" />
+  <br />
+  <div class="chartheader">Report</div>
+  <br />
+  <div>
+    <img src="/static/img/charti.png" alt="chart" width="100%" height="100%" />
+  </div>
+  <br />
+  <div class="butcont">
+    <button class="bta btn" onclick="location.href = 'preview/';">
+      Preview
+    </button>
+    <button class="btb btn bg-success" onclick="location.href = 'code/';">
+      Create Embedding code
+    </button>
   </div>
 </div>
-<script>
-  function chooseFile() {
-    document.getElementById("fileInput").click();
-  }
-</script>
 {% endblock %}

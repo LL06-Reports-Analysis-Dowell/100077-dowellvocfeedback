@@ -6,6 +6,9 @@ from django.shortcuts import redirect, render
 def home(request):
     return render(request, 'feedback/home.html', { })
 
+def code(request):
+    return render(request, 'feedback/code.html', { })
+
 # Handle Brand Details------------------------------------------------------
 def submit_brand_details(request):
     if request.method == 'POST':
