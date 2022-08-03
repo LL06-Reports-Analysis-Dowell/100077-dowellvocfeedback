@@ -9,10 +9,13 @@ def home(request):
 def code(request):
     return render(request, 'feedback/code.html', { })
 
+def emailqrcode(request):
+    return render(request, 'feedback/emailqrcode.html',{})
+
 # Handle Brand Details------------------------------------------------------
-def submit_brand_details(request):
+def qrcode(request):
     if request.method == 'POST':
         form = request.POST
         print(form)
         form.save()
-        return redirect('/feedback/emailqrcode/')
+        return redirect('/feedback/emailqrcode.html', {})

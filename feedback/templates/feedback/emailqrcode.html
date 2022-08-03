@@ -1,0 +1,41 @@
+{% extends 'feedback/base.html' %} {% block content %}
+<div class="mroot">
+  <button class="closebutton" onclick="location.href='code/';">X</button>
+  <div class="qrbox" id="qrboxid"></div>
+  <p class="qruri">
+    http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
+  </p>
+
+  <label class="clabel"
+    ><input type="checkbox" name="checkbox" value="value" /><u
+      onclick="location.href='policy/"
+      >Privacy Policy</u
+    ></label
+  >
+  <hr class="hrredline" />
+
+  <input
+    type="text"
+    name="username"
+    id="username"
+    placeholder="Your name"
+    onchange="username = this.value"
+  />
+  <input
+    type="email"
+    name="useremail"
+    id="useremail"
+    placeholder="Your email"
+    onchange="useremail = this.value"
+  />
+
+  <div class='pt-3'>
+    <a
+      location.href="emailconfirmation/"
+      class="btn btn-success "
+      onclick="location.href='emailconfirmation/'"
+      ><b>Send embedding code & QR code to your email</b></a
+    >
+  </div>
+</div>
+{% endblock %}

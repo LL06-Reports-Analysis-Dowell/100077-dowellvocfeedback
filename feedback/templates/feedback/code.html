@@ -1,6 +1,6 @@
 {% extends 'feedback/base.html' %} {% block content %}
 <div class="mroot">
-  <form action="qrcode" method="POST" enctype="multipart/form-data">
+  <form action="createQrcode/" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <center>
       <div style="color: yellow; width: 150px; height: 150px">
@@ -203,8 +203,8 @@
           x.value = position.coords.latitude + " " + position.coords.longitude;
         }
       </script>
-      <button class="lowerbutton btn btn-success !important">
-        <u>Create Embedding Code</u>
+      <button class="lowerbutton btn btn-success !important" location.href="emailqrcode/">
+        <b>Create Embedding Code</b>
       </button>
     </center>
   </form>
