@@ -1,0 +1,23 @@
+{% extends 'feedback/base.html' %} {% block content %}
+<div class="mroot">
+  <button class="closebutton" onclick="location.href='code.html'">X</button>
+  <div class="qrbox" id="qrboxid"></div>
+  <p class="qruri">
+    http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
+  </p>
+
+  <div class="orangetext">&#62; Display the QRcode for scanning</div>
+  <div class="orangetext">&#62; Embed the code to your website</div>
+
+  <label class="clabel"
+    ><input type="checkbox" name="checkbox" value="value" /><u
+      onclick="location.href='policy/'"
+      >Privacy Policy</u
+    ></label
+  >
+
+  <button class="lowerbutton" onclick="location.href='emailqrcode.html'">
+    <b>Click here to send embedding code & QR code your email</b>
+  </button>
+</div>
+{% endblock %}
