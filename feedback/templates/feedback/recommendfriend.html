@@ -1,7 +1,7 @@
 {% extends 'feedback/base.html' %} {% block content %}
 
 <div class="mroot">
-  <button class="closebutton" onclick="location.href='code.html'">X</button>
+  <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
   <div class="mailed centertext" id="mailed">
     Embedding code & QR code mailed to <span class="emailvar"></span>
   </div>
@@ -12,13 +12,13 @@
   <hr class="hrredline" />
 
   <div class="greenquestion">
-    do you want to recommend this to your friends and colleagues
+    Do you want to recommend this to your friends and colleagues ?
   </div>
 
   <div class="threebuttonsdiv">
-    <button class="thbut">No</button>
-    <button class="thbut">Later</button>
-    <button class="thbut">Yes</button>
+    <button class="thbut btn btn-danger">No</button>
+    <button class="thbut btn btn-primary">Later</button>
+    <button class="thbut btn btn-success">Yes</button>
   </div>
 
   <input
@@ -36,6 +36,7 @@
     onchange="friendemail = this.value"
   />
 
-  <button class="lowerbutton">send</button>
+  <br />
+  <button class="lowerbutton btn btn-success">Send</button>
 </div>
 {% endblock %}

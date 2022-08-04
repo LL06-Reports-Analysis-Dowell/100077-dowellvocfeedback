@@ -1,16 +1,19 @@
 {% extends 'feedback/base.html' %} {% block content %}
 <div class="mroot">
-  <button class="closebutton" onclick="location.href='code/';">X</button>
-  <div class="qrbox" id="qrboxid"></div>
+  <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
+  <div class="qrbox" id="qrboxid">
+    <img src='/static/img/qr.png' alt='qr' class='qr'>
+  </div>
+  <br>
   <p class="qruri">
     http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
   </p>
 
   <label class="clabel"
-    ><input type="checkbox" name="checkbox" value="value" /><u
+    ><input type="checkbox" name="checkbox" value="value" /><a href={% url 'policy' %}><b
       onclick="location.href='policy/"
-      >Privacy Policy</u
-    ></label
+      >Privacy Policy</b
+    ></a></label
   >
   <hr class="hrredline" />
 
@@ -31,9 +34,8 @@
 
   <div class='pt-3'>
     <a
-      location.href="emailconfirmation/"
+      href={% url 'confirmmail' %}
       class="btn btn-success "
-      onclick="location.href='emailconfirmation/'"
       ><b>Send embedding code & QR code to your email</b></a
     >
   </div>

@@ -1,10 +1,16 @@
-{% extends 'feedback/base.html' %}
+{% extends 'feedback/base.html' %} 
+{% load static %}
+{% block content %}
 <div class="mroot">
   <button class="closebutton" onclick="history.back()">X</button>
   <div class="header">Question</div>
 
-  <video width="640" height="640" controls>
-    <source src="./video/video.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+  <div class="p-5">
+    <video width="340" height="340" controls>
+      <source src={% static 'video/video.mp4' %} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
 </div>
+
+{% endblock %}

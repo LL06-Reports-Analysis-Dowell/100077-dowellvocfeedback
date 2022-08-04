@@ -1,7 +1,10 @@
 {% extends 'feedback/base.html' %} {% block content %}
 <div class="mroot">
-  <button class="closebutton" onclick="location.href='code.html'">X</button>
-  <div class="qrbox" id="qrboxid"></div>
+  <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
+  <div class="qrbox" id="qrboxid">
+    <img src='/static/img/qr.png' alt='qr' class='qr'>
+  </div>
+  <br>
   <p class="qruri">
     http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
   </p>
@@ -13,11 +16,10 @@
     ><input type="checkbox" name="checkbox" value="value" /><u
       onclick="location.href='policy/'"
       >Privacy Policy</u
-    ></label
-  >
+    ></label>
 
-  <button class="lowerbutton" onclick="location.href='emailqrcode.html'">
-    <b>Click here to send embedding code & QR code your email</b>
-  </button>
+    <a href={% url 'showqr' %} class="btn btn-success"  >
+      <b>Click here to send embedding code & QR code your email</b>
+    </a>
 </div>
 {% endblock %}

@@ -9,6 +9,10 @@ body {
   justify-content: center;
 }
 
+a {
+  text-decoration: none;
+}
+
 .btn-file {
   position: relative;
   overflow: hidden;
@@ -36,9 +40,9 @@ body {
   max-width: 500px;
   padding-top: 5px;
   padding-bottom: 15px;
-  border: 10px;
+  border: 14px;
   border-color: #198754;
-  /* border-radius: 15px; */
+  border-radius: 15px;
   border-style: solid;
   display: flex;
   flex-direction: column;
@@ -352,7 +356,7 @@ input::placeholder {
   .mroot {
     border: 3px;
     border-color: #198754;
-    /* border-radius: 10px; */
+    border-radius: 10px;
     border-style: solid;
     display: flex;
     flex-direction: column;

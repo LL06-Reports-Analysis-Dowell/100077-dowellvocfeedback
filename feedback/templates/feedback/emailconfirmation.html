@@ -1,7 +1,10 @@
 {% extends 'feedback/base.html' %} {% block content %}
 <div class="mroot">
-  <button class="closebutton" onclick="location.href='code.html'">X</button>
-  <div class="qrbox" id="qrboxid"></div>
+  <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
+  <div class="qrbox" id="qrboxid">
+    <img src='/static/img/qr.png' alt='qr' class='qr'>
+  </div>
+  <br>
   <p class="qruri">
     http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
   </p>
@@ -10,13 +13,13 @@
   <div class="orangetext">&#62; Embed the code to your website</div>
 
   <label class="clabel"
-    ><input type="checkbox" name="checkbox" value="value" /><u
-      >Privacy Policy</u
+    ><input type="checkbox" name="checkbox" value="value" /><b
+      ><a href={% url 'policy' %} >Privacy Policy</a></b
     ></label
   >
 
-  <button class="lowerbutton" onclick="location.href='recommendfriend.html'">
-    <u>Click here to send embedding code & QR code your email</u>
-  </button>
+  <a href={% url 'recommend' %} class="btn btn-success"  >
+    <b>Click here to send embedding code &amp; QR code your email</b>
+  </a>
 </div>
 {% endblock %}

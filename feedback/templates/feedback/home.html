@@ -40,10 +40,10 @@
   </div>
   <br />
   <div class="butcont">
-    <button class="bta btn" onclick="location.href = 'preview/';">
+    <button class="bta btn" onclick="location.href = '{% url 'preview' %}">
       Preview
     </button>
-    <button class="btb btn bg-success" onclick="location.href = 'code/';">
+    <button class="btb btn bg-success" onclick="location.href='{% url 'code' %}'">
       Create Embedding code
     </button>
   </div>

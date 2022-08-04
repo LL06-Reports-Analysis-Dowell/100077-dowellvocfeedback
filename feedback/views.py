@@ -44,3 +44,6 @@ def createQrCode(request):
         return redirect('', {})
     else:
         return render(request, 'feedback/emailqrcode.html',{})
+
+def error_404_view(request, exception):
+    return render(request, 'feedback/404.html', {}, status=404)
