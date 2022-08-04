@@ -41,7 +41,7 @@ def createQrCode(request):
         form = request.POST
         print(form)
         form.save()
-        return redirect('', {})
+        return redirect('feedback/showqrcode.html', {})
     else:
         return render(request, 'feedback/emailqrcode.html',{})
 
