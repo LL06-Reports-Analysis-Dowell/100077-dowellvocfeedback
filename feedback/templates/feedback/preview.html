@@ -21,6 +21,7 @@
       </p>
     </div>
     <div class="bcontainer" style="width: 100%">
+      {% comment %}
       <center>
         <button class="sbutton">👎</button>
         <button class="sbutton">😒</button>
@@ -37,12 +38,12 @@
         <button class="sbutton">😊</button>
         <button class="sbutton">👍</button>
       </center>
-    </div>
-
-    <div class="butonsub">
-      <div class="ba">min</div>
-      <div class="bb">mid</div>
-      <div class="bc">max</div>
+      {% endcomment %}
+      <img
+        src="/static/img/scale.png"
+        alt="scale"
+        style="width: 100%; height: 50px"
+      />
     </div>
   </div>
 
@@ -54,6 +55,6 @@
     onclick="location.href = '{% url 'video' %}'"
   >
     <b>Help demonstration video</b>
-</a>
+  </a>
 </div>
 {% endblock %}

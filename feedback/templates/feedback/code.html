@@ -1,6 +1,6 @@
 {% extends 'feedback/base.html' %} {% block content %}
 <div class="mroot">
-  <form action="createQrcode/" method="POST" enctype="multipart/form-data">
+  <form action="{% url 'code' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <center>
       <div style="color: yellow; width: 150px; height: 150px">
@@ -17,7 +17,7 @@
       <span class="btn btn-success btn-file">
         Select Your logo...<input
           type="file"
-          name="logo"
+          name="brand_picture"
           id="photofile"
           accept="image/*;capture=camera"
           onchange="previewFile(this);"
@@ -26,14 +26,14 @@
       ><br />
       <input
         type="text"
-        name="brand"
+        name="brand_name"
         id="brandname"
         placeholder="Enter your Brand name"
         required
       />
       <input
         type="text"
-        name="product"
+        name="brand_product_name"
         id="productname"
         placeholder="Enter your Product name"
         required
@@ -203,7 +203,7 @@
           x.value = position.coords.latitude + " " + position.coords.longitude;
         }
       </script>
-      <button class="lowerbutton btn btn-success !important" location.href="emailqrcode/">
+      <button class="lowerbutton btn btn-success !important" type="submit">
         <b>Create Embedding Code</b>
       </button>
     </center>
