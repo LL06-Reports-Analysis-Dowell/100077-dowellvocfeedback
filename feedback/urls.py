@@ -11,4 +11,6 @@ urlpatterns = [
     path('email-confirmation/', views.confirm, name='confirmmail'),
     path('recommend-friend/', views.recommend, name='recommend'),
     path('privacy-policy/', views.policy, name='policy'), 
+    path('media/qrcodes/qr.png', views.qr, name='qr'),
 ]
+

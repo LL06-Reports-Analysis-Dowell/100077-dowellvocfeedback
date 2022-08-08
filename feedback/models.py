@@ -13,4 +13,4 @@ class Brand(models.Model):
     # brand_user_email = models.EmailField()
 
     def __str__(self):
-        return self.brand_name
+        return self.brand_qr_code_picture, self.brand_qr_code_url
