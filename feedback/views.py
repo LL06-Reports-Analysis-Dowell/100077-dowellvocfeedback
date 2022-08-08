@@ -1,5 +1,5 @@
-from django.shortcuts import redirect, render
 import qrcode
+from django.shortcuts import redirect, render
 from feedback.models import Brand
 from feedback.qrcode_gen import qrgen
 
@@ -43,21 +43,20 @@ def emailqr(request):
 # Handle Brand Details------------------------------------------------------
 def createQrCode(request):
 
-    link = 'http://127.0.0.1:8000/feedback/showqrcode'
+    link = 'http://127.0.0.1:8000/'
+
+    outimg = 'media/qrcodes/qr.png'
     
     if request.method == 'POST':
         brand_logo = request.FILES['brand_picture']
         brand_name = request.POST['brand_name']
         brand_product_name = request.POST['brand_product_name']
+        brand_qr_code_url =  f'{link}?brand={brand_name}&product={brand_product_name}&logo={outimg}'
+        qrgen(brand_logo, link, brand_product_name, brand_name, outimg)
 
-        data = qrgen(brand_logo, link, brand_product_name, brand_name)
- 
-        brand = Brand(brand_logo=brand_logo, brand_name=brand_name, brand_product_name=brand_product_name, brand_qr_code_picture=brand_qr_code_picture, brand_qr_code_url=brand_qr_code_url)
-
+        brand = Brand(brand_logo=brand_logo, brand_name=brand_name, brand_product_name=brand_product_name, brand_qr_code_picture=outimg, brand_qr_code_url=brand_qr_code_url)
         brand.save()
-
-
-        return redirect('/show-qr-code/', {'brand', brand})
+        return redirect('/show-qr-code/', {'brand_qr_code_url', brand_qr_code_url})
     else:
         return render(request, 'feedback/code.html',{})
 

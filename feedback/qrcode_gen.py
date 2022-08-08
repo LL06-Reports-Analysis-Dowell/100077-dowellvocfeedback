@@ -8,7 +8,7 @@ def encode(key,text):
     return encoded_text
 
 # For Product --------------------------------------------------------------
-def qrgen(brand_logo,link,brand_product_name,outimg,brand_name):
+def qrgen(brand_logo, link, brand_name, brand_product_name, outimg):
     # import modules
 
     # taking image which user wants
@@ -29,7 +29,7 @@ def qrgen(brand_logo,link,brand_product_name,outimg,brand_name):
     )
 
     # taking url or text
-    url = f'{link}?brand={brand_name}&product={brand_product_name}&logo={brand_name}'
+    url = f'{link}?brand={brand_name}&product={brand_product_name}&logo={outimg}'
 
     # adding URL or text to QRcode
     QRcode.add_data(url)
@@ -51,10 +51,6 @@ def qrgen(brand_logo,link,brand_product_name,outimg,brand_name):
 
     # save the QR code generated
     QRimg.save(outimg)
-
-    return QRimg, url
-
-#qrcodegen("r.jpg","https://www.geeksforgeeks.org/%22,%22coco%22,%22pepsi%22,%22myimg.png%22)
 
 # For User --------------------------------------------------------------
 def qrgen1(userid,imgout):
