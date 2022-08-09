@@ -8,9 +8,10 @@
   <p class="qruri">
     http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
   </p>
-
+<form action='/email-qr-code/' method="POST">
+  {% csrf_token %}
   <label class="clabel"
-    ><input type="checkbox" name="checkbox" value="value" /><a href={% url 'policy' %}><b
+    ><input type="checkbox" name="checkbox" value="checked"  required/><a href={% url 'policy' %}><b
       onclick="location.href='policy/"
       >Privacy Policy</b
     ></a></label
@@ -19,25 +20,28 @@
 
   <input
     type="text"
-    name="username"
-    id="username"
+    name="user"
+    id="brand_user_name"
     placeholder="Your name"
-    onchange="username = this.value"
+    onchange="brand_user_name = this.value"
+    required
   />
   <input
     type="email"
-    name="useremail"
-    id="useremail"
+    name="user_email"
+    id="user_email"
     placeholder="Your email"
-    onchange="useremail = this.value"
+    onchange="user_email = this.value"
+    required
   />
 
   <div class='pt-3'>
-    <a
-      href={% url 'confirmmail' %}
+    <button
       class="btn btn-success "
-      ><b>Send embedding code & QR code to your email</b></a
+      type="submit"
+      ><b>Send embedding code & QR code to your email</b></button
     >
   </div>
+</form>
 </div>
 {% endblock %}

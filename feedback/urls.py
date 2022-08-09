@@ -10,7 +10,6 @@ urlpatterns = [
     path('brand-details/', views.create_Qr_Code, name='code'),
     path('show-qr-code/', views.showqr, name='showqr'),
     path('email-qr-code/', views.emailqr, name='emailqr'),
-    path('email-confirmation/', views.confirm, name='confirmmail'),
     path('recommend-friend/', views.recommend, name='recommend'),
     path('privacy-policy/', views.policy, name='policy'), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
