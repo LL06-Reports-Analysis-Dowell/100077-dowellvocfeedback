@@ -1,11 +1,14 @@
+import os
 import qrcode
 from django.shortcuts import redirect, render
 from feedback.models import Brand
 from feedback.qrcode_gen import qrgen
 
 
+
 # Create your views here.
-data = None
+
+
 # Home Page------------------------------------------------------
 def home(request):
     return render(request, 'feedback/home.html', { })
@@ -13,7 +16,10 @@ def home(request):
 
 # Show QR Code ------------------------------------------------------
 def showqr(request):
-    return render(request, 'feedback/showqrcode.html',{})
+    brand = Brand()
+    print(brand)
+
+    return render(request, 'feedback/showqrcode.html',{ 'brand': brand })
 
 # Preview Page------------------------------------------------------
 def preview(request):
@@ -41,43 +47,33 @@ def emailqr(request):
 
 
 # Handle Brand Details------------------------------------------------------
-def createQrCode(request):
+def create_Qr_Code(request):
 
+    # Application Link
     link = 'http://127.0.0.1:8000/'
 
+    # Path to save qr code
     outimg = 'media/qrcodes/qr.png'
     
+    # Get Brand Data
     if request.method == 'POST':
         brand_logo = request.FILES['brand_picture']
         brand_name = request.POST['brand_name']
         brand_product_name = request.POST['brand_product_name']
         brand_qr_code_url =  f'{link}?brand={brand_name}&product={brand_product_name}&logo={outimg}'
+
+        print(brand_qr_code_url)
+
+        # create QR from brand data.
         qrgen(brand_logo, link, brand_product_name, brand_name, outimg)
 
+        # Save Brand Data   
         brand = Brand(brand_logo=brand_logo, brand_name=brand_name, brand_product_name=brand_product_name, brand_qr_code_picture=outimg, brand_qr_code_url=brand_qr_code_url)
         brand.save()
-        return redirect('/show-qr-code/', {'brand_qr_code_url', brand_qr_code_url})
+
+        return redirect('/show-qr-code/' ,{'brand_qr_code_url': brand_qr_code_url})
     else:
-        return render(request, 'feedback/code.html',{})
-
-# New qr------------------------------------------------------
-def qr(brand_data):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(brand_data)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill_color="black", back_color="white")
-
-    url = img.save("media/qrcodes/qr.png")
-
-
-    return "media/qrcodes/qr.png"
-
+        return render(request, 'feedback/code.html')
 
 
 def error_404_view(request, exception):

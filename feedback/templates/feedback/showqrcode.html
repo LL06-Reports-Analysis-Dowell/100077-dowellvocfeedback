@@ -1,20 +1,22 @@
-{% extends 'feedback/base.html' %} {% block content %}
+{% extends 'feedback/base.html' %}
 {% load static %}
+ {% block content %}
+
 <div class="mroot">
   <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
   <div class="qrbox" id="qrboxid">
-    <img src="{{ brand.brand_qr_code_picture.url }}" alt='qr' class='qr'>
+    <img src="http://127.0.0.1:8000/media/qrcodes/qr.png" alt='qr_code' class='qr' style="height: 200px; width: 200px;">
   </div>
   <br>
   <p class="qruri">
-    <a href="{% static 'qrcodes/qr/png' %} ">{{ brand_qr_code_url }} </a>
+    
   </p>
 
   <div class="orangetext">&#62; Display the QRcode for scanning</div>
   <div class="orangetext">&#62; Embed the code to your website</div>
 
   <label class="clabel"
-    ><input type="checkbox" name="checkbox" value="value" /><u
+    ><input type="checkbox" name="checkbox" value="value"  required/><u
       onclick="location.href='policy/'"
       >Privacy Policy</u
     ></label>
@@ -23,4 +25,5 @@
       <b>Click here to send embedding code & QR code your email</b>
     </a>
 </div>
+
 {% endblock %}
