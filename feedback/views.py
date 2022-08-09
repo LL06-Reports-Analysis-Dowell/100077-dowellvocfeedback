@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import redirect, render
 from .models import Brand
 from feedback.qrcode_gen import qrgen
@@ -43,31 +44,40 @@ def recommend(request):
 # Email Qr Code------------------------------------------------------
 def emailqr(request):
 
-    # Brand Data
-
-    # Mail Content
-    subject = 'Voice of Customer-Feedback : Your QR Code'
-    message = 'Give your user ability to review your brand and manage the feedback.,Embed the QR Code {{ brand_qr_code_picture }} in your website or app. \n \n Thanks, \n Voice of Customer-Feedback'
-    from_email = settings.EMAIL_HOST_USER
-
+    context = {}
 
     # Find Email Address
     if request.method == 'POST':
         brand_user_name = request.POST['brand_user_name']
         email = request.POST['user_email']
 
-        # Update Brand Data with user name
+        # Brand Data
+        
+
+        # Mail Content
+        subject = 'Voice of Customer-Feedback : Do Well'
+        message = 'Your QR Code is attached to this email.'
+        htmlgen = '<h1>Dear user,</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://localhost:8000/media/qrcodes/qr.png">http://localhost:8000/media/qrcodes/qr.png</a></strong> <p> Thanks, </p> <p> Voice of Customer-Feedback</p>'
+        from_email = settings.EMAIL_HOST_USER
         
 
         # Send Email
-        send_mail(subject, message, from_email, [email], fail_silently=False)
-        return redirect('/recommend-friend/', {'email': email})
+        send_mail(subject, message, from_email, [email], fail_silently=False, html_message=htmlgen)
+
+        context["email"] = email
+        context["brand_user_name"] = brand_user_name
+
+        print(context)
+
+        return redirect('/recommend-friend/', context)
 
     return render(request, 'feedback/emailqrcode.html',{})
 
 
 # Handle Brand Details------------------------------------------------------
 def create_Qr_Code(request):
+
+    context = {}
 
     # Application Link
     link = 'http://127.0.0.1:8000/'
@@ -89,7 +99,8 @@ def create_Qr_Code(request):
         brand = Brand(brand_logo=brand_logo, brand_name=brand_name, brand_product_name=brand_product_name, brand_qr_code_picture=outimg, brand_qr_code_url=brand_qr_code_url)
         brand.save()
 
-        # brand = Brand.objects.latest('id')
+        context["brand_qr_code_url"] = brand_qr_code_url
 
-        return redirect('/show-qr-code/' , {'brand': brand}) 
+
+        return redirect('/show-qr-code/' , context)
     return render(request, 'feedback/code.html')

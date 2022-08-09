@@ -12,7 +12,7 @@
   {% csrf_token %}
   <label class="clabel"
     ><input type="checkbox" name="checkbox" value="checked"  required/><a href={% url 'policy' %}><b
-      onclick="location.href='policy/"
+      onclick="location.href='policy/" class="text-secondary"
       >Privacy Policy</b
     ></a></label
   >
@@ -20,7 +20,7 @@
 
   <input
     type="text"
-    name="user"
+    name="brand_user_name"
     id="brand_user_name"
     placeholder="Your name"
     onchange="brand_user_name = this.value"

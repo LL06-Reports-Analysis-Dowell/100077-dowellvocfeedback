@@ -3,7 +3,7 @@
 <div class="mroot">
   <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
   <div class="mailed centertext" id="mailed">
-    Embedding code & QR code mailed to <span class="emailvar"></span>
+    Embedding code & QR code mailed to <span class="emailvar">{{ email }}</span>
   </div>
 
   <div class="blacktext centertext">&#62; Display the QRcode for scanning</div>
