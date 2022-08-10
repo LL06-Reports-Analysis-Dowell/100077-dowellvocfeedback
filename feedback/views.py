@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 
 # Create your views here.
 def error_404_view(request, exception):
+
     return render(request, 'feedback/404.html', {}, status=404)
 
 # Home Page------------------------------------------------------
@@ -18,14 +19,12 @@ def home(request):
 
 # Show QR Code ------------------------------------------------------
 def showqr(request):
-    brand = Brand()
-    print(brand)
-
-    return render(request, 'feedback/showqrcode.html',{ 'brand': brand })
+    
+    return render(request, 'feedback/showqrcode.html')
 
 # Preview Page------------------------------------------------------
 def preview(request):
-    return render(request, 'feedback/preview.html',{})
+    return render(request, 'feedback/preview.html')
 
 # Help Video------------------------------------------------------
 def helpvideo(request):
@@ -66,9 +65,7 @@ def emailqr(request):
         context["email"] = email
         context["brand_user_name"] = brand_user_name
 
-        # print(context)
-
-        return redirect('/recommend-friend/', context)
+        return render(request, 'feedback/recommendfriend.html', context)
 
     return render(request, 'feedback/emailqrcode.html',{})
 
@@ -101,5 +98,5 @@ def create_Qr_Code(request):
         context["brand_qr_code_url"] = brand_qr_code_url
 
 
-        return redirect('/show-qr-code/' , context)
+        return render(request, 'feedback/showqrcode.html' , context)
     return render(request, 'feedback/code.html')
