@@ -2,11 +2,11 @@
 <div class="mroot">
   <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
   <div class="qrbox" id="qrboxid">
-    <img src="http://127.0.0.1:8000/media/qrcodes/qr.png" alt='qr_code' class='qr' style="height: 200px; width: 200px;">
+    <img src="http://127.0.0.1:8000/media/qrcodes/thumbnails/{{ brand_qr_code_picture}}" alt='qr_code' class='qr' style="height: 200px; width: 200px;">
   </div>
   <br>
   <p class="qruri">
-    http://localhost:8080/qrcode/qrcode.png?user:ahmed&name:Ali&code:123
+    {{ brand_qr_code_url }}
   </p>
 <form action='/email-qr-code/' method="POST">
   {% csrf_token %}
@@ -17,8 +17,8 @@
     ></a></label
   >
   <hr class="hrredline" />
-  <input  type="text" name="brand_qr_code_url" id="loc" value="{{linkurl}}" hidden>
-  <input  type="text" name="brand_qr_code_picture" id="loc" value="{{img}}" hidden readonly>
+  <input  type="text" name="brand_qr_code_url" id="loc" value="{{brand_qr_code_url}}" hidden>
+  <input  type="text" name="brand_qr_code_picture" id="loc" value="{{brand_qr_code_picture}}" hidden readonly>
 
   <input
     type="text"
@@ -39,9 +39,9 @@
 
   <div class='pt-3'>
     <button
-      class="btn btn-success "
+      class="btn btn-success"
       type="submit"
-      ><b>Send embedding code & QR code to your email</b></button
+      ><b>Send embedding code &amp; QR code to your email</b></button
     >
   </div>
 </form>

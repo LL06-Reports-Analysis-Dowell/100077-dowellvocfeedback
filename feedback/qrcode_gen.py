@@ -9,10 +9,8 @@ def encode(key,text):
 
 # For Product --------------------------------------------------------------
 def qrgen(brand_logo, link, brand_name, brand_product_name, outimg, logoname):
-    # import modules
-
-    # taking image which user wants
-    # in the QR code center
+   
+    # taking image which user wants in the QR code center
     Logo_link = brand_logo
 
     brand_logo = Image.open(Logo_link)

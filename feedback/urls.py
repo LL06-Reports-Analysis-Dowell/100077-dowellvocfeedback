@@ -8,7 +8,6 @@ urlpatterns = [
     path('preview/', views.preview, name='preview'),
     path('help-video/', views.helpvideo, name="video"),
     path('brand-details/', views.create_Qr_Code, name='code'),
-    path('show-qr-code/', views.showqr, name='showqr'),
     path('email-qr-code/', views.emailqr, name='emailqr'),
     path('recommend-friend/', views.recommend, name='recommend'),
     path('privacy-policy/', views.policy, name='policy'), 

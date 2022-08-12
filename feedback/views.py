@@ -16,57 +16,15 @@ def home(request):
     return render(request, 'feedback/home.html', { })
 
 
-# Show QR Code ------------------------------------------------------
-def showqr(request):
-    
-    return render(request, 'feedback/showqrcode.html')
-
 # Preview Page------------------------------------------------------
 def preview(request):
     return render(request, 'feedback/preview.html')
+
 
 # Help Video------------------------------------------------------
 def helpvideo(request):
     return render(request, 'feedback/help-video.html',{})
 
-# Privacy Policy------------------------------------------------------
-def policy(request):
-    return render(request, 'feedback/policy.html',{})
-
-# Recommend Friend------------------------------------------------------
-def recommend(request):
-    return render(request, 'feedback/recommendfriend.html',{})
-
-
-# Email Qr Code------------------------------------------------------
-def emailqr(request):
-
-    context = {}
-
-    # Find Email Address
-    if request.method == 'POST':
-        brand_user_name = request.POST['brand_user_name']
-        email = request.POST['user_email']
-
-        # Brand Data
-        
-
-        # Mail Content
-        subject = 'Voice of Customer Feedback'
-        message = 'Your QR Code is attached to this email.'
-        htmlgen = '<h1>Dear user,</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://127.0.0.1:8000/media/qrcodes/qr.png">http://127.0.0.1:8000/media/qrcodes/qr.png</a></strong> <p> Thanks, </p> <p> Voice of Customer-Feedback</p>'
-        from_email = settings.EMAIL_HOST_USER
-        
-
-        # Send Email
-        send_mail(subject, message, from_email, [email], fail_silently=False, html_message=htmlgen)
-
-        context["email"] = email
-        context["brand_user_name"] = brand_user_name
-
-        return render(request, 'feedback/recommendfriend.html', context)
-
-    return render(request, 'feedback/emailqrcode.html',{})
 
 
 # Handle Brand Details------------------------------------------------------
@@ -109,3 +67,54 @@ def create_Qr_Code(request):
 
         return render(request, 'feedback/showqrcode.html' , context)
     return render(request, 'feedback/code.html')
+
+# Privacy Policy------------------------------------------------------
+def policy(request):
+    return render(request, 'feedback/policy.html',{})
+
+
+
+# Display the QR code
+# def show_qr(request):
+#     context = {}
+
+
+
+
+# Email Qr Code------------------------------------------------------
+def emailqr(request):
+
+    context = {}
+    brand_qr_code_picture = request.GET.get('brand_qr_code_picture', None)
+    brand_qr_code_url = request.GET.get('brand_qr_code_url', None)
+    context["brand_qr_code_picture"] = brand_qr_code_picture
+    context['brand_qr_code_url'] = brand_qr_code_url
+
+    # print(brand_qr_code_url)
+
+    # Find Email Address
+    if request.method == 'POST':
+        brand_user_name = request.POST['brand_user_name']
+        email = request.POST['user_email']
+        # Mail Content
+        subject = 'Voice of Customer Feedback'
+        message = 'Your QR Code is attached to this email.'
+        htmlgen = '<h1>Dear {{brand_user_name }},</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://127.0.0.1:8000/media/qrcodes/{{ brand_qr_code_picture }}">http://127.0.0.1:8000/media/qrcodes/{{ brand_qr_code_picture }}</a></strong> <p> Thanks, </p> <p> Voice of Customer-Feedback</p>'
+        from_email = settings.EMAIL_HOST_USER
+        
+
+        # Send Email
+        send_mail(subject, message, from_email, [email], fail_silently=False, html_message=htmlgen)
+
+        # Pass data to next tempate
+        context["email"] = email
+        context["brand_user_name"] = brand_user_name
+        
+
+        return render(request, 'feedback/recommendfriend.html', context)
+
+    return render(request, 'feedback/emailqrcode.html', context)
+
+# Recommend Friend------------------------------------------------------
+def recommend(request):
+    return render(request, 'feedback/recommendfriend.html',{})
