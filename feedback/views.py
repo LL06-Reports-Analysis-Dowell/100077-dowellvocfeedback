@@ -1,9 +1,11 @@
-from django.shortcuts import redirect, render
-from .models import Brand
-from feedback.qrcode_gen import qrgen
+from django.shortcuts import render
 from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.core.mail import send_mail
 from PIL import Image
+from feedback.qrcode_gen import qrgen
+from .models import Brand
 
 
 # Create your views here.
@@ -74,13 +76,6 @@ def policy(request):
 
 
 
-# Display the QR code
-# def show_qr(request):
-#     context = {}
-
-
-
-
 # Email Qr Code------------------------------------------------------
 def emailqr(request):
 
@@ -96,19 +91,22 @@ def emailqr(request):
     if request.method == 'POST':
         brand_user_name = request.POST['brand_user_name']
         email = request.POST['user_email']
+         # Pass data to next tempate
+        context["email"] = email
+        context["brand_user_name"] = brand_user_name
+
         # Mail Content
         subject = 'Voice of Customer Feedback'
-        message = 'Your QR Code is attached to this email.'
-        htmlgen = '<h1>Dear {{brand_user_name }},</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://127.0.0.1:8000/media/qrcodes/{{ brand_qr_code_picture }}">http://127.0.0.1:8000/media/qrcodes/{{ brand_qr_code_picture }}</a></strong> <p> Thanks, </p> <p> Voice of Customer-Feedback</p>'
+        html_message = render_to_string('feedback/qrmail.html', context )
+        plain_message = strip_tags(html_message)
+        # plain_message.attach(brand_qr_code_picture, 'image/jpeg', open(f"media/qrcodes/{brand_qr_code_picture}", 'rb').read())
         from_email = settings.EMAIL_HOST_USER
         
 
         # Send Email
-        send_mail(subject, message, from_email, [email], fail_silently=False, html_message=htmlgen)
+        send_mail(subject, plain_message, from_email, [email], fail_silently=False, html_message=html_message)
 
-        # Pass data to next tempate
-        context["email"] = email
-        context["brand_user_name"] = brand_user_name
+       
         
 
         return render(request, 'feedback/recommendfriend.html', context)
@@ -117,4 +115,20 @@ def emailqr(request):
 
 # Recommend Friend------------------------------------------------------
 def recommend(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        friend_name = request.POST['brand_user_name']
+        friend_email = request.POST['friend_email']
+
+        # Mail Content
+        subject = 'Voice of Customer Feedback'
+        message = 'Your QR Code is attached to this email.'
+        htmlgen = '<h1>Dear {{friend_name }},</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://'
+        from_email = settings.EMAIL_HOST_USER
+
+        # Send Email
+        send_mail(subject, message, from_email, [friend_email], fail_silently=False, html_message=htmlgen)
+
+        return render(request, 'feedback/thankyou.html')
+
     return render(request, 'feedback/recommendfriend.html',{})
