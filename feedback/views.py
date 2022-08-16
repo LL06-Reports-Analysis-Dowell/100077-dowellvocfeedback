@@ -75,43 +75,48 @@ def policy(request):
     return render(request, 'feedback/policy.html',{})
 
 
+# Pass Brand Data to Template------------------------------------------------------
+def showqr(request):
+    if request.method == 'POST':
+        brand_qr_code_picture = request.POST['brand_qr_code_picture']
+        brand_qr_code_url = request.POST['brand_qr_code_url']
 
-# Email Qr Code------------------------------------------------------
+        context = {}
+        context["brand_qr_code_picture"] = brand_qr_code_picture
+        context['brand_qr_code_url'] = brand_qr_code_url
+        return render(request, 'feedback/emailqrcode.html', context)
+
+
+
+# Send Email------------------------------------------------------
 def emailqr(request):
 
     context = {}
-    brand_qr_code_picture = request.GET.get('brand_qr_code_picture', None)
-    brand_qr_code_url = request.GET.get('brand_qr_code_url', None)
-    context["brand_qr_code_picture"] = brand_qr_code_picture
-    context['brand_qr_code_url'] = brand_qr_code_url
-
-    # print(brand_qr_code_url)
-
     # Find Email Address
     if request.method == 'POST':
         brand_user_name = request.POST['brand_user_name']
         email = request.POST['user_email']
-         # Pass data to next tempate
+        brand_qr_code_picture = request.POST['brand_qr_code_picture']
+        brand_qr_code_url = request.POST['brand_qr_code_url']
+
+        # URL to QR Code Image
+        brand_qr_code_picture_url = f"http://127.0.0.1:8000/media/qrcodes/{brand_qr_code_picture}"
+
+        # Pass data to next tempate
         context["email"] = email
-        context["brand_user_name"] = brand_user_name
 
         # Mail Content
-        subject = 'Voice of Customer Feedback'
-        html_message = render_to_string('feedback/qrmail.html', context )
-        plain_message = strip_tags(html_message)
-        # plain_message.attach(brand_qr_code_picture, 'image/jpeg', open(f"media/qrcodes/{brand_qr_code_picture}", 'rb').read())
+        subject = 'Embed your Feedback Code to your website.'
+        htmlgen =  f"Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website copy this and paste your website</h2> Embed this code to your website copy this and paste your website</h2><br>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt; <br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong>"
+        plain_message = strip_tags(htmlgen)
         from_email = settings.EMAIL_HOST_USER
         
-
         # Send Email
-        send_mail(subject, plain_message, from_email, [email], fail_silently=False, html_message=html_message)
+        send_mail(subject, plain_message, from_email, [email], fail_silently=False, html_message=htmlgen)
 
-       
-        
 
         return render(request, 'feedback/recommendfriend.html', context)
 
-    return render(request, 'feedback/emailqrcode.html', context)
 
 # Recommend Friend------------------------------------------------------
 def recommend(request):
@@ -123,7 +128,7 @@ def recommend(request):
         # Mail Content
         subject = 'Voice of Customer Feedback'
         message = 'Your QR Code is attached to this email.'
-        htmlgen = '<h1>Dear {{friend_name }},</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://'
+        htmlgen = '<h1>Dear {friend_name },</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://'
         from_email = settings.EMAIL_HOST_USER
 
         # Send Email

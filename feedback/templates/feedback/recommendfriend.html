@@ -1,12 +1,12 @@
 {% extends 'feedback/base.html' %} {% block content %}
 
 <div class="mroot">
-  <button class="closebutton" onclick="location.href='{% url 'code' %}'">
+  <button class="closebutton" onclick="location.href='{% url 'home' %}'">
     X
   </button>
   <div class="mailed centertext" id="mailed">
     Embedding code & QR code mailed to
-    <span class="text-success">{{ brand_user_name }}</span>
+    <span class="text-success">{{ email }}</span>
   </div>
 
   <div class="blacktext centertext">&#62; Display the QRcode for scanning</div>

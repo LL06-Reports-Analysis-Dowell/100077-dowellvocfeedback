@@ -1,28 +1,52 @@
-{% extends 'feedback/base.html' %}
- {% block content %}
+{% extends 'feedback/base.html' %} {% block content %}
 
 <div class="mroot">
-  <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
+  <button class="closebutton" onclick="location.href='{% url 'code' %}'">
+    X
+  </button>
   <div class="qrbox" id="qrboxid">
-    <img src="http://127.0.0.1:8000/media/qrcodes/thumbnails/{{ brand_qr_code_picture}}" alt='qr_code' class='qr' style="height: 200px; width: 200px;">
+    <img
+      src="http://127.0.0.1:8000/media/qrcodes/thumbnails/{{ brand_qr_code_picture}}"
+      alt="qr_code"
+      class="qr"
+      style="height: 200px; width: 200px"
+    />
   </div>
-  <br>
-  <p class="qruri">
-    {{ brand_qr_code_url }}
-  </p>
+  <br />
+  <p class="qruri">{{ brand_qr_code_url }}</p>
 
   <div class="orangetext">&#62; Display the QRcode for scanning</div>
   <div class="orangetext">&#62; Embed the code to your website</div>
 
-  <label class="clabel"
-    ><input type="checkbox" name="checkbox" value="value"  required/><u
-      onclick="location.href='policy/'"
-      >Privacy Policy</u
-    ></label>
+  <form action="/show-qr-code/" method="POST">
+    {% csrf_token %}
+    <label class="clabel"
+      ><input type="checkbox" name="checkbox" value="value" required /><u
+        onclick="location.href='policy/'"
+        >Privacy Policy</u
+      ></label
+    >
 
-    <a href={% url 'emailqr' %} class="btn btn-success">
+    <input
+      type="text"
+      name="brand_qr_code_url"
+      id="loc"
+      value="{{brand_qr_code_url}}"
+      hidden
+    />
+    <input
+      type="text"
+      name="brand_qr_code_picture"
+      id="loc"
+      value="{{brand_qr_code_picture}}"
+      hidden
+      readonly
+    />
+
+    <button type="submit" class="btn btn-success">
       <b>Click here to send embedding code &amp; QR code your email</b>
-    </a>
+    </button>
+  </form>
 </div>
 
 {% endblock %}
