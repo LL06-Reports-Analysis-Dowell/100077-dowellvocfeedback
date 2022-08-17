@@ -137,3 +137,22 @@ def recommend(request):
         return render(request, 'feedback/thankyou.html')
 
     return render(request, 'feedback/recommendfriend.html',{})
+
+def feedback(request):
+    context = {}
+    if request.method == 'POST':
+        rating = request.POST['rating']
+        brand_name = request.POST['brand_name']
+        brand_product_name = request.POST['product_name']
+        context['success'] = 'Thank you for your feedback.'
+
+        return render(request, 'feedback/thankyou.html', context)
+
+    brand_name = request.GET.get('brand_name', None)
+    brand_product_name = request.GET.get('product_name', None)
+    brand_logo = request.GET.get('brand_logo', None)
+
+    context['brand_name'] = brand_name
+    context['product_name'] = brand_product_name
+    context['brand_logo'] = brand_logo
+    return render(request, 'feedback/feedback.html', context)

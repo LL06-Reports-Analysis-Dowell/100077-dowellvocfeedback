@@ -1,0 +1,35 @@
+{% extends 'feedback/base.html' %}
+
+{% block content %}
+<div class="mroot">
+<div class="pt-5">
+    <div class="row">
+        <div class="">
+            <div class="text-center">
+                <img src="http://127.0.0.1:8000/media/brandlogos/thumbnails/{{ brand_logo }}"  style="height:200px; width: 200px; object-fit:cover;" alt="{{ brand_name }}"></center>
+                <h5>Considering your experience with <b>{{ brand_name}}</b>, how likely would you be to recommend <b>{{ brand_product_name }}</b> to your friend or colleague</h5>
+                <br>
+                <h4 class="text-center text-success"><b>Give Feedback.</b></h4>
+                <img
+                src="/static/img/scale.png"
+                alt="scale"
+                style="width: 100%; height: 50px"
+              />
+                <div class='butonsub'>
+                  <div class='ba'>Very unlikely</div>
+                  <div class='bb'></div>
+                  <div class='bc'>Very likely</div>
+                </div>
+            </div>
+             <br>
+            <div class="text-center">
+            <h3 class="text-success"></h3>
+                <button class="lowerbutton btn btn-success">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+  {% endblock  %}

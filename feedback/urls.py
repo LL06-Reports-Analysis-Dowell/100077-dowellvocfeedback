@@ -12,5 +12,6 @@ urlpatterns = [
     path('show-qr-code/', views.showqr, name='showqr'),
     path('recommend-friend/', views.recommend, name='recommend'),
     path('privacy-policy/', views.policy, name='policy'), 
+    path('brandurl/', views.feedback, name='feedback'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
