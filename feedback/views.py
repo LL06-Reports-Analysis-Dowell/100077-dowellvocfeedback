@@ -21,6 +21,9 @@ def decode(key,decodetext):
 # Encryption Key------------------------------------------------------
 key="l6h8C92XGJmQ_aXpPN7_VUMzA8LS8Bg50A83KNcrVhQ="
 
+# Base URL------------------------------------------------------
+base_url = 'http://127.0.0.1:8000/'
+
 # Create your views here.
 def error_404_view(request, exception):
 
@@ -46,7 +49,7 @@ def helpvideo(request):
 def create_Qr_Code(request):
 
     context = {}
-    base_url = 'http://127.0.0.1:8000/'
+   
 
     # Get Brand Data
     if request.method == 'POST':
@@ -105,10 +108,12 @@ def showqr(request):
     if request.method == 'POST':
         brand_qr_code_picture = request.POST['brand_qr_code_picture']
         brand_qr_code_url = request.POST['brand_qr_code_url']
+        base_url = request.POST['base_url']
 
         context = {}
         context["brand_qr_code_picture"] = brand_qr_code_picture
         context['brand_qr_code_url'] = brand_qr_code_url
+        context['base_url'] = base_url
         return render(request, 'feedback/emailqrcode.html', context)
 
 
@@ -117,6 +122,7 @@ def showqr(request):
 def emailqr(request):
 
     context = {}
+
     # Find Email Address
     if request.method == 'POST':
         brand_user_name = request.POST['brand_user_name']
@@ -125,14 +131,14 @@ def emailqr(request):
         brand_qr_code_url = request.POST['brand_qr_code_url']
 
         # URL to QR Code Image
-        brand_qr_code_picture_url = f"http://127.0.0.1:8000/media/qrcodes/{brand_qr_code_picture}"
+        brand_qr_code_picture_url = f"{base_url}media/qrcodes/{brand_qr_code_picture}"
 
         # Pass data to next tempate
         context["email"] = email
 
         # Mail Content
         subject = 'Embed your Feedback Code to your website.'
-        htmlgen =  f"Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website copy this and paste your website</h2> Embed this code to your website copy this and paste your website</h2><br>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt; <br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong>"
+        htmlgen =  f"<div style='padding: 50px'>Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website or copy and paste below your website</h2><br> <div style='text-align: center;'><img src='{base_url}media/qrcodes/{ brand_qr_code_picture}' alt='qr_code'  style='height: 200px; width: 200px;' /></div><br><code>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt;</code><br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong></div>"
         plain_message = strip_tags(htmlgen)
         from_email = settings.EMAIL_HOST_USER
         

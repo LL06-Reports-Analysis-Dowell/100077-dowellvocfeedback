@@ -369,3 +369,8 @@ input::placeholder {
     height: 40vh;
   }
 }
+
+.btn-success {
+  background-color: #90ee90 !important;
+  border-color: #90ee90 !important;
+}

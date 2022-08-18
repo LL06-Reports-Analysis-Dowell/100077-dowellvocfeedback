@@ -6,7 +6,7 @@
   </div>
   <br>
   <p class="qruri">
-    {{base_url}}media/qrcodes/thumbnails/{{ brand_qr_code_picture}}
+    {{base_url}}media/qrcodes/{{ brand_qr_code_picture}}
   </p>
 <form action='/email-qr-code/' method="POST">
   {% csrf_token %}
