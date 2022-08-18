@@ -41,7 +41,7 @@ a {
   padding-top: 5px;
   padding-bottom: 15px;
   border: 14px;
-  border-color: #198754;
+  border-color: #90ee90;
   border-radius: 15px;
   border-style: solid;
   display: flex;
@@ -57,7 +57,7 @@ a {
   padding-top: 5px;
   padding-bottom: 15px;
   border: 10px;
-  border-color: #198754;
+  border-color: #90ee90;
   border-radius: 15px;
   border-style: solid;
   display: flex;
@@ -113,7 +113,7 @@ a {
 }
 
 .btb {
-  background-color: #198754;
+  background-color: #90ee90;
   color: white;
   font-size: 12px;
   font-weight: bolder;
@@ -322,7 +322,7 @@ input::placeholder {
 }
 
 .greenquestion {
-  color: #198754;
+  color: #90ee90;
   font-size: 18px;
   font-weight: bolder;
   width: 80%;
@@ -355,7 +355,7 @@ input::placeholder {
 
   .mroot {
     border: 3px;
-    border-color: #198754;
+    border-color: #90ee90;
     border-radius: 10px;
     border-style: solid;
     display: flex;

@@ -140,19 +140,19 @@ def recommend(request):
 
 def feedback(request):
     context = {}
+    context['success'] = 'Thank you for your feedback.'
     if request.method == 'POST':
         rating = request.POST['rating']
         brand_name = request.POST['brand_name']
-        brand_product_name = request.POST['product_name']
-        context['success'] = 'Thank you for your feedback.'
-
+        brand_product_name = request.POST['brand_product_name']
         return render(request, 'feedback/thankyou.html', context)
 
-    brand_name = request.GET.get('brand_name', None)
-    brand_product_name = request.GET.get('product_name', None)
-    brand_logo = request.GET.get('brand_logo', None)
+    brand_name = request.GET.get('brand', None)
+    brand_product_name = request.GET.get('product', None)
+    brand_logo = request.GET.get('logo', None)
+    print(brand_product_name)
 
     context['brand_name'] = brand_name
-    context['product_name'] = brand_product_name
+    context['brand_product_name'] = brand_product_name
     context['brand_logo'] = brand_logo
     return render(request, 'feedback/feedback.html', context)

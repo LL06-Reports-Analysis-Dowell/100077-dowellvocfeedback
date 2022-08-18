@@ -7,7 +7,7 @@
         <div class="">
             <div class="text-center">
                 <img src="http://127.0.0.1:8000/media/brandlogos/thumbnails/{{ brand_logo }}"  style="height:200px; width: 200px; object-fit:cover;" alt="{{ brand_name }}"></center>
-                <h5>Considering your experience with <b>{{ brand_name}}</b>, how likely would you be to recommend <b>{{ brand_product_name }}</b> to your friend or colleague</h5>
+                <h5>Considering your experience with <b>{{ brand_name }}</b>, how likely would you be to recommend <b>{{ brand_product_name }}</b> to your friend or colleague?</h5>
                 <br>
                 <h4 class="text-center text-success"><b>Give Feedback.</b></h4>
                 <img
@@ -21,12 +21,38 @@
                   <div class='bc'>Very likely</div>
                 </div>
             </div>
-             <br>
+            <br>
+            <form action='/brandurl/' method="POST">
+            {% csrf_token %}
+             <input
+                type="text"
+                name="brand_name"
+                id="loc"
+                value="{{ brand_name }}"
+                hidden
+                />
+                <input
+                type="text"
+                name="brand_product_name"
+                id="loc"
+                value="{{ brand_product_name }}"
+                hidden
+                readonly
+                />
+                <input
+                type="text"
+                name="rating"
+                id="loc"
+                value="Good"
+                hidden
+                readonly
+                />
+                <br>
             <div class="text-center">
-            <h3 class="text-success"></h3>
-                <button class="lowerbutton btn btn-success">
+                <button class="lowerbutton btn btn-success" type="submit" >
                     Send
                 </button>
+            </form>
             </div>
         </div>
     </div>
