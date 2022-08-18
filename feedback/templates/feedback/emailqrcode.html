@@ -2,11 +2,11 @@
 <div class="mroot">
   <button class="closebutton" onclick="location.href='{% url 'code' %}'">X</button>
   <div class="qrbox" id="qrboxid">
-    <img src="http://127.0.0.1:8000/media/qrcodes/thumbnails/{{ brand_qr_code_picture}}" alt='qr_code' class='qr' style="height: 200px; width: 200px;">
+    <img src="{{base_url}}media/qrcodes/thumbnails/{{ brand_qr_code_picture}}" alt='qr_' class='qr' style="height: 200px; width: 200px;">
   </div>
   <br>
   <p class="qruri">
-    {{ brand_qr_code_url }}
+    {{base_url}}media/qrcodes/thumbnails/{{ brand_qr_code_picture}}
   </p>
 <form action='/email-qr-code/' method="POST">
   {% csrf_token %}

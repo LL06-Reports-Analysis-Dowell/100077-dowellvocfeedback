@@ -6,14 +6,16 @@
   </button>
   <div class="qrbox" id="qrboxid">
     <img
-      src="http://127.0.0.1:8000/media/qrcodes/thumbnails/{{ brand_qr_code_picture}}"
+      src="{{base_url}}media/qrcodes/thumbnails/{{ brand_qr_code_picture}}"
       alt="qr_code"
       class="qr"
       style="height: 200px; width: 200px"
     />
   </div>
   <br />
-  <p class="qruri">{{ brand_qr_code_url }}</p>
+  <p class="qruri">
+    {{base_url}}/media/qrcodes/thumbnails/{{ brand_qr_code_picture}}
+  </p>
 
   <div class="orangetext">&#62; Display the QRcode for scanning</div>
   <div class="orangetext">&#62; Embed the code to your website</div>
