@@ -22,7 +22,7 @@ def decode(key,decodetext):
 key="l6h8C92XGJmQ_aXpPN7_VUMzA8LS8Bg50A83KNcrVhQ="
 
 # Base URL------------------------------------------------------
-base_url = 'http://127.0.0.1:8000/'
+base_url = 'http://127.0.0.1:8000'
 
 # Create your views here.
 def error_404_view(request, exception):
@@ -138,7 +138,7 @@ def emailqr(request):
 
         # Mail Content
         subject = 'Embed your Feedback Code to your website.'
-        htmlgen =  f"<div style='padding: 50px'>Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website or copy and paste below your website</h2><br> <div style='text-align: center;'><img src='{base_url}media/qrcodes/{ brand_qr_code_picture}' alt='qr_code'  style='height: 200px; width: 200px;' /></div><br><code>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt;</code><br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong></div>"
+        htmlgen =  f"<div style='padding: 50px'>Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website or copy and paste below your website</h2><br> <div style='text-align: center;'><img src='{base_url}/media/qrcodes/{ brand_qr_code_picture}' alt='qr_code'  style='height: 200px; width: 200px;' /></div><br><code>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt;</code><br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong></div>"
         plain_message = strip_tags(htmlgen)
         from_email = settings.EMAIL_HOST_USER
         

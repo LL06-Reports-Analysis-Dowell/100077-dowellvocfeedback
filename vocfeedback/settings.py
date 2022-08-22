@@ -133,7 +133,9 @@ MEDIA_URL = '/media/'
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '7313d750c79b10'
-EMAIL_HOST_PASSWORD = '93db1ded07fea1'
-EMAIL_PORT = '2525'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'crud3swift@gmail.com'
+EMAIL_HOST_PASSWORD = 'qfbataehwnuldtvq'
+
