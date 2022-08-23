@@ -131,7 +131,7 @@ def emailqr(request):
         brand_qr_code_url = request.POST['brand_qr_code_url']
 
         # URL to QR Code Image
-        brand_qr_code_picture_url = f"{base_url}media/qrcodes/{brand_qr_code_picture}"
+        brand_qr_code_picture_url = f"{base_url}/media/qrcodes/{brand_qr_code_picture}"
 
         # Pass data to next tempate
         context["email"] = email

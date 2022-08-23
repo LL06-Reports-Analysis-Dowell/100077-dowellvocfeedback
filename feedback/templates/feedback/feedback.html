@@ -10,16 +10,7 @@
                 <h5>Considering your experience with <b>{{ brand_name }}</b>, how likely would you be to recommend <b>{{ brand_product_name }}</b> to your friend or colleague?</h5>
                 <br>
                 <h4 class="text-center text-success"><b>Give Feedback.</b></h4>
-                <img
-                src="/static/img/scale.png"
-                alt="scale"
-                style="width: 100%; height: 50px"
-              />
-                <div class='butonsub'>
-                  <div class='ba'>Very unlikely</div>
-                  <div class='bb'></div>
-                  <div class='bc'>Very likely</div>
-                </div>
+                <iframe src="https://100035.pythonanywhere.com/?brand_name={{ brand_name }}&product_name={{ brand_product_name }}" ></iframe >
             </div>
             <br>
             <form action='/brandurl/' method="POST">
