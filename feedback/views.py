@@ -65,12 +65,12 @@ def create_Qr_Code(request):
         brand_logo = encode(key,brand_logo_formatted)
 
         # Application Links
-        brand_qr_code_url =  f"{base_url}brandurl/?brand={brand_name}&product={brand_product_name}&logo={brand_logo.decode()}"
+        brand_qr_code_url =  f"{base_url}/brandurl/?brand={brand_name}&product={brand_product_name}&logo={brand_logo.decode()}"
        
         
 
         # create QR from brand data.
-        qrgen(brand_logo_raw, f"{base_url}brandurl", brand_name.decode(), brand_product_name.decode(), f"media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
+        qrgen(brand_logo_raw, f"{base_url}/brandurl", brand_name.decode(), brand_product_name.decode(), f"media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
 
         # Save Brand Data   
         brand = Brand(brand_name=brand_name, brand_product_name=brand_product_name, brand_logo=brand_logo_raw,  brand_qr_code_picture=f'media/qrcodes/{brand_logo_formatted}', brand_qr_code_url=brand_qr_code_url)
@@ -86,7 +86,7 @@ def create_Qr_Code(request):
 
         
 
-        brand_qr_code_url = f"{base_url}brandurl?brand={brand_name.decode()}&product={brand_product_name.decode()}&logo={brand_logo.decode()}"
+        brand_qr_code_url = f"{base_url}/brandurl?brand={brand_name.decode()}&product={brand_product_name.decode()}&logo={brand_logo.decode()}"
         
         context["brand_qr_code_url"] = brand_qr_code_url
         context["brand_qr_code_picture"] = brand_logo_formatted
@@ -138,7 +138,7 @@ def emailqr(request):
 
         # Mail Content
         subject = 'Embed your Feedback Code to your website.'
-        htmlgen =  f"<div style='padding: 50px'>Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website or copy and paste below your website</h2><br> <div style='text-align: center;'><img src='{base_url}/media/qrcodes/{ brand_qr_code_picture}' alt='qr_code'  style='height: 200px; width: 200px;' /></div><br><code>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt;</code><br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong></div>"
+        htmlgen =  f"<div style='padding: 50px'>Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website or copy and paste below your website</h2><br> <div style='text-align: center;'><img src='http://127.0.0.1:8000/media/qrcodes/{brand_qr_code_picture}' alt='qr_code'  style='height: 200px; width: 200px;' /></div><br><code>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt;</code><br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong></div>"
         plain_message = strip_tags(htmlgen)
         from_email = settings.EMAIL_HOST_USER
         
@@ -159,7 +159,7 @@ def recommend(request):
         # Mail Content
         subject = 'Voice of Customer Feedback'
         message = 'Your QR Code is attached to this email.'
-        htmlgen = '<h1>Dear {friend_name },</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/> <strong>QR Code Link<a href="http://'
+        htmlgen = '<h1>Dear { friend_name },</h1> <br> <p>Give your user ability to review your brand and manage the feedback.,Embed the QR Code in your website or app. </p> <br/>'
         from_email = settings.EMAIL_HOST_USER
 
         # Send Email
@@ -171,8 +171,6 @@ def recommend(request):
 
 def feedback(request):
     context = {}
-    
-
     # Brand Data & Rating
     if request.method == 'POST':
         rating = request.POST['rating']
