@@ -137,5 +137,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'crud3swift@gmail.com'
-EMAIL_HOST_PASSWORD = 'qfbataehwnuldtvq'
+EMAIL_HOST_PASSWORD = 'ulhepvoxgfpnkfwd'
 

@@ -22,7 +22,7 @@ def decode(key,decodetext):
 key="l6h8C92XGJmQ_aXpPN7_VUMzA8LS8Bg50A83KNcrVhQ="
 
 # Base URL------------------------------------------------------
-base_url = 'http://127.0.0.1:8000'
+base_url = 'http://127.0.0.1:8000/'
 
 # Create your views here.
 def error_404_view(request, exception):
@@ -65,12 +65,12 @@ def create_Qr_Code(request):
         brand_logo = encode(key,brand_logo_formatted)
 
         # Application Links
-        brand_qr_code_url =  f"{base_url}/brandurl/?brand={brand_name}&product={brand_product_name}&logo={brand_logo.decode()}"
+        brand_qr_code_url =  f"{base_url}brandurl/?brand={brand_name}&product={brand_product_name}&logo={brand_logo.decode()}"
        
         
 
         # create QR from brand data.
-        qrgen(brand_logo_raw, f"{base_url}/brandurl", brand_name.decode(), brand_product_name.decode(), f"media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
+        qrgen(brand_logo_raw, f"{base_url}brandurl", brand_name.decode(), brand_product_name.decode(), f"media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
 
         # Save Brand Data   
         brand = Brand(brand_name=brand_name, brand_product_name=brand_product_name, brand_logo=brand_logo_raw,  brand_qr_code_picture=f'media/qrcodes/{brand_logo_formatted}', brand_qr_code_url=brand_qr_code_url)
@@ -86,7 +86,7 @@ def create_Qr_Code(request):
 
         
 
-        brand_qr_code_url = f"{base_url}/brandurl?brand={brand_name.decode()}&product={brand_product_name.decode()}&logo={brand_logo.decode()}"
+        brand_qr_code_url = f"{base_url}brandurl?brand={brand_name.decode()}&product={brand_product_name.decode()}&logo={brand_logo.decode()}"
         
         context["brand_qr_code_url"] = brand_qr_code_url
         context["brand_qr_code_picture"] = brand_logo_formatted
@@ -131,7 +131,7 @@ def emailqr(request):
         brand_qr_code_url = request.POST['brand_qr_code_url']
 
         # URL to QR Code Image
-        brand_qr_code_picture_url = f"{base_url}/media/qrcodes/{brand_qr_code_picture}"
+        brand_qr_code_picture_url = f"{base_url}media/qrcodes/{brand_qr_code_picture}"
 
         # Pass data to next tempate
         context["email"] = email
