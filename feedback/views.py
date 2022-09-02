@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from PIL import Image
 from cryptography.fernet import Fernet
 from feedback.qrcode_gen import qrgen
+from feedback.dowellconnection1 import dowellconnection
 from .models import Brand
 
 
@@ -50,10 +51,23 @@ def create_Qr_Code(request):
 
     context = {}
    
-
     # Get Brand Data
     if request.method == 'POST':
-        # Get from request ans encode it
+
+        # USER DATA.
+        # Get from request.
+        location = request.POST['loc']
+        browser = request.POST['brow']
+        operating_system = request.POST['os']
+        time = request.POST['time']
+        address_ip = request.POST['ip']
+        device_name = request.POST['dev']
+
+        user_info = { "Location": location, "OperatingSystem": operating_system, "BrowserType": browser, "IPAddress": address_ip, "LocalTime": str(time), "DeviceName": device_name}
+
+
+        # BRAND DATA.
+        # Get from request and encode it
         brand_name_raw = request.POST['brand_name']
         brand_name  = encode(key,brand_name_raw)
         brand_product_name_raw = request.POST['brand_product_name']
@@ -67,14 +81,22 @@ def create_Qr_Code(request):
         # Application Links
         brand_qr_code_url =  f"{base_url}brandurl/?brand={brand_name}&product={brand_product_name}&logo={brand_logo.decode()}"
        
-        
-
         # create QR from brand data.
         qrgen(brand_logo_raw, f"{base_url}brandurl", brand_name.decode(), brand_product_name.decode(), f"media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
 
-        # Save Brand Data   
+
+        # Save Brand Data  SQLite test DB 
         brand = Brand(brand_name=brand_name, brand_product_name=brand_product_name, brand_logo=brand_logo_raw,  brand_qr_code_picture=f'media/qrcodes/{brand_logo_formatted}', brand_qr_code_url=brand_qr_code_url)
         brand.save()
+
+
+        # Our json Data.
+        field = { "Brand" : brand_name.decode('utf-8'), "Product" : brand_product_name.decode('utf-8'), "BrandLogo": f'media/qrcodes/{brand_logo_formatted}', "BrandQRUrl" : brand_qr_code_url}
+
+        # Save to MongoDB Shared DB.
+        response = dowellconnection("voc", "bangalore", "voc", "voc_feedback", "voc_feedback", "1082", "ABCDE","insert", field, "nil")
+        print(response)
+
 
         # save the diff thumbnail for the brand logo
         with Image.open(f"media/qrcodes/{brand_logo_formatted}") as image:
@@ -84,7 +106,6 @@ def create_Qr_Code(request):
             image.thumbnail((256,256))
             image.save(f"media/brandlogos/thumbnails/{brand_logo_formatted}",quality=100)
 
-        
 
         brand_qr_code_url = f"{base_url}brandurl?brand={brand_name.decode()}&product={brand_product_name.decode()}&logo={brand_logo.decode()}"
         
