@@ -58,3 +58,14 @@ def qrgen1(userid,imgout):
 
     # Saving as an image file
     img.save(imgout)
+
+
+# For User Data ----------------------------------------------------
+def qrgen2(username, link, password, imgout):
+    # Encode and gen QR
+
+    loginURL = f'{link}?username={username}&key={password}'
+
+    img = qrcode.make(loginURL)
+
+    img.save(imgout)

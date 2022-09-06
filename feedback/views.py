@@ -4,9 +4,18 @@ from django.utils.html import strip_tags
 from django.core.mail import send_mail
 from PIL import Image
 from cryptography.fernet import Fernet
-from feedback.qrcode_gen import qrgen
-from feedback.dowellconnection1 import dowellconnection
+from feedback.dowellconnection import dowellconnection
+from feedback.qrcode_gen import qrgen, qrgen2
+from feedback.passgen import generate_random_password, generate_random_password1
+from feedback.dowell_hash import dowell_hash
 from .models import Brand
+from .models import User
+
+# Encryption Key------------------------------------------------------
+key="l6h8C92XGJmQ_aXpPN7_VUMzA8LS8Bg50A83KNcrVhQ="
+
+# Base URL------------------------------------------------------
+base_url = 'http://127.0.0.1:8000/'
 
 
 # Encode Function
@@ -19,11 +28,7 @@ def decode(key,decodetext):
     cipher_suite = Fernet(key.encode())
     decoded_text = cipher_suite.decrypt(decodetext.encode())
     return decoded_text.decode()
-# Encryption Key------------------------------------------------------
-key="l6h8C92XGJmQ_aXpPN7_VUMzA8LS8Bg50A83KNcrVhQ="
 
-# Base URL------------------------------------------------------
-base_url = 'http://127.0.0.1:8000/'
 
 # Create your views here.
 def error_404_view(request, exception):
@@ -54,8 +59,7 @@ def create_Qr_Code(request):
     # Get Brand Data
     if request.method == 'POST':
 
-        # USER DATA.
-        # Get from request.
+        # USER DATA : get from request.
         location = request.POST['loc']
         browser = request.POST['brow']
         operating_system = request.POST['os']
@@ -63,8 +67,47 @@ def create_Qr_Code(request):
         address_ip = request.POST['ip']
         device_name = request.POST['dev']
 
-        user_info = { "Location": location, "OperatingSystem": operating_system, "BrowserType": browser, "IPAddress": address_ip, "LocalTime": str(time), "DeviceName": device_name}
+        # User Account Info
+        random_user = generate_random_password1(8)
+        random_password = generate_random_password(10)
 
+
+        # Generate User Info Quick Response Codes & Save to SQLite DB & MongoDB Cluster
+        qrgen2(random_user, f'{base_url}login', random_password, f'media/userqrcodes/{random_user}')
+        user = User(user_name=random_user, user_password=random_password, user_info_qrcode=f'media/userqrcodes/{random_user}')
+        user.save()
+        #TODO: Should we save the path to Qr code to the User info collection?
+        field = {
+            "Username":random_user,
+            "Password":dowell_hash(random_password),
+            "Firstname": "DoWell",
+            "Lastname": "Feedback",
+            "Email": f'{random_user}@gmail.com',
+            "Role": "User", 
+            "Team_Code": "100077", 
+            "phonecode": "+123", 
+            "Phone": "07123456"
+        }
+        # TODO: Ask why a connection to this collection is setup by default and an instance is created everytime app is accessed.
+        res = dowellconnection("login","bangalore","login","dowell_users","dowell_users","1116","ABCDE","insert",field,"nil")
+        print(res)
+
+
+        # Cluster User data storage.
+        field = {
+            "Username": random_user, 
+            "OS": operating_system, 
+            "Device": device_name, 
+            "Browser": browser, 
+            "Location": location, 
+            "Time":str(time), 
+            "IP": address_ip, 
+            "SessionID": "Link",
+            "Connection":"Not get"
+            }
+            # TODO : Ask if this is the right collection & why a connection must be made
+        response = dowellconnection("login","bangalore","login","login","login","6752828281","ABCDE","insert",field,"nil") 
+        print(response)
 
         # BRAND DATA.
         # Get from request and encode it
@@ -129,12 +172,12 @@ def showqr(request):
     if request.method == 'POST':
         brand_qr_code_picture = request.POST['brand_qr_code_picture']
         brand_qr_code_url = request.POST['brand_qr_code_url']
-        base_url = request.POST['base_url']
+        url = request.POST['base_url']
 
         context = {}
         context["brand_qr_code_picture"] = brand_qr_code_picture
         context['brand_qr_code_url'] = brand_qr_code_url
-        context['base_url'] = base_url
+        context['base_url'] = url
         return render(request, 'feedback/emailqrcode.html', context)
 
 
