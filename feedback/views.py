@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
+from django.views.decorators.clickjacking import xframe_options_exempt
 from PIL import Image
 from cryptography.fernet import Fernet
 from feedback.dowellconnection import dowellconnection
@@ -31,27 +32,37 @@ def decode(key,decodetext):
 
 
 # Create your views here.
+    
+@xframe_options_exempt
 def error_404_view(request, exception):
 
     return render(request, 'feedback/404.html', {}, status=404)
 
 # Home Page------------------------------------------------------
+
+@xframe_options_exempt
 def home(request):
     return render(request, 'feedback/home.html', { })
 
 
 # Preview Page------------------------------------------------------
+    
+@xframe_options_exempt
 def preview(request):
     return render(request, 'feedback/preview.html')
 
 
 # Help Video------------------------------------------------------
+    
+@xframe_options_exempt
 def helpvideo(request):
     return render(request, 'feedback/help-video.html',{})
 
 
 
 # Handle Brand Details------------------------------------------------------
+    
+@xframe_options_exempt
 def create_Qr_Code(request):
 
     context = {}
@@ -73,10 +84,11 @@ def create_Qr_Code(request):
 
 
         # Generate User Info Quick Response Codes & Save to SQLite DB & MongoDB Cluster
-        qrgen2(random_user, f'{base_url}login', random_password, f'media/userqrcodes/{random_user}')
+        qrgen2(random_user, f'{base_url}login', random_password, f'media/userqrcodes/{random_user}.png')
+        
         user = User(user_name=random_user, user_password=random_password, user_info_qrcode=f'media/userqrcodes/{random_user}')
         user.save()
-        #TODO: Should we save the path to Qr code to the User info collection?
+        
         field = {
             "Username":random_user,
             "Password":dowell_hash(random_password),
@@ -88,7 +100,7 @@ def create_Qr_Code(request):
             "phonecode": "+123", 
             "Phone": "07123456"
         }
-        # TODO: Ask why a connection to this collection is setup by default and an instance is created everytime app is accessed.
+       
         res = dowellconnection("login","bangalore","login","dowell_users","dowell_users","1116","ABCDE","insert",field,"nil")
         print(res)
 
@@ -105,7 +117,7 @@ def create_Qr_Code(request):
             "SessionID": "Link",
             "Connection":"Not get"
             }
-            # TODO : Ask if this is the right collection & why a connection must be made
+            
         response = dowellconnection("login","bangalore","login","login","login","6752828281","ABCDE","insert",field,"nil") 
         print(response)
 
@@ -163,11 +175,15 @@ def create_Qr_Code(request):
     return render(request, 'feedback/code.html')
 
 # Privacy Policy------------------------------------------------------
+    
+@xframe_options_exempt
 def policy(request):
     return render(request, 'feedback/policy.html',{})
 
 
 # Pass Brand Data to Template------------------------------------------------------
+    
+@xframe_options_exempt
 def showqr(request):
     if request.method == 'POST':
         brand_qr_code_picture = request.POST['brand_qr_code_picture']
@@ -183,6 +199,8 @@ def showqr(request):
 
 
 # Send Email------------------------------------------------------
+    
+@xframe_options_exempt
 def emailqr(request):
 
     context = {}
@@ -214,6 +232,8 @@ def emailqr(request):
 
 
 # Recommend Friend------------------------------------------------------
+    
+@xframe_options_exempt
 def recommend(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -233,6 +253,7 @@ def recommend(request):
 
     return render(request, 'feedback/recommendfriend.html',{})
 
+@xframe_options_exempt
 def feedback(request):
     context = {}
     # Brand Data & Rating
