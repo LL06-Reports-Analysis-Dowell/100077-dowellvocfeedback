@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
@@ -62,6 +65,8 @@ def helpvideo(request):
 
 # Handle Brand Details------------------------------------------------------
     
+
+@csrf_exempt
 @xframe_options_exempt
 def create_Qr_Code(request):
 
@@ -183,6 +188,7 @@ def policy(request):
 
 # Pass Brand Data to Template------------------------------------------------------
     
+@csrf_exempt
 @xframe_options_exempt
 def showqr(request):
     if request.method == 'POST':
@@ -200,6 +206,7 @@ def showqr(request):
 
 # Send Email------------------------------------------------------
     
+@csrf_exempt
 @xframe_options_exempt
 def emailqr(request):
 
@@ -232,7 +239,7 @@ def emailqr(request):
 
 
 # Recommend Friend------------------------------------------------------
-    
+@csrf_exempt  
 @xframe_options_exempt
 def recommend(request):
     if request.method == 'POST':
@@ -254,6 +261,7 @@ def recommend(request):
     return render(request, 'feedback/recommendfriend.html',{})
 
 @xframe_options_exempt
+@csrf_exempt
 def feedback(request):
     context = {}
     # Brand Data & Rating

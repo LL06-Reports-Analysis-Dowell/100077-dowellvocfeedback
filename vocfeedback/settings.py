@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'feedback'
 ]
 
+# CSRF_COOKIE_SAMESITE='none'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -116,6 +119,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -144,3 +150,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'crud3swift@gmail.com'
 EMAIL_HOST_PASSWORD = 'ulhepvoxgfpnkfwd'
 
+# iframe embeed option to allow post requests.
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = None
+
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = None
