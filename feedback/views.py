@@ -19,7 +19,7 @@ from .models import User
 key="l6h8C92XGJmQ_aXpPN7_VUMzA8LS8Bg50A83KNcrVhQ="
 
 # Base URL------------------------------------------------------
-base_url = 'http://127.0.0.1:8000/'
+base_url = 'https://100077.pythonanywhere.com/'
 
 
 # Encode Function
@@ -35,7 +35,7 @@ def decode(key,decodetext):
 
 
 # Create your views here.
-    
+
 @xframe_options_exempt
 def error_404_view(request, exception):
 
@@ -49,14 +49,14 @@ def home(request):
 
 
 # Preview Page------------------------------------------------------
-    
+
 @xframe_options_exempt
 def preview(request):
     return render(request, 'feedback/preview.html')
 
 
 # Help Video------------------------------------------------------
-    
+
 @xframe_options_exempt
 def helpvideo(request):
     return render(request, 'feedback/help-video.html',{})
@@ -64,14 +64,14 @@ def helpvideo(request):
 
 
 # Handle Brand Details------------------------------------------------------
-    
+
 
 @csrf_exempt
 @xframe_options_exempt
 def create_Qr_Code(request):
 
     context = {}
-   
+
     # Get Brand Data
     if request.method == 'POST':
 
@@ -89,41 +89,41 @@ def create_Qr_Code(request):
 
 
         # Generate User Info Quick Response Codes & Save to SQLite DB & MongoDB Cluster
-        qrgen2(random_user, f'{base_url}login', random_password, f'media/userqrcodes/{random_user}.png')
-        
+        qrgen2(random_user, f'{base_url}login', random_password, f'100077.pythonanywhere.com/media/userqrcodes/{random_user}.png')
+
         user = User(user_name=random_user, user_password=random_password, user_info_qrcode=f'media/userqrcodes/{random_user}')
         user.save()
-        
+
         field = {
             "Username":random_user,
             "Password":dowell_hash(random_password),
             "Firstname": "DoWell",
             "Lastname": "Feedback",
             "Email": f'{random_user}@gmail.com',
-            "Role": "User", 
-            "Team_Code": "100077", 
-            "phonecode": "+123", 
+            "Role": "User",
+            "Team_Code": "100077",
+            "phonecode": "+123",
             "Phone": "07123456"
         }
-       
+
         res = dowellconnection("login","bangalore","login","dowell_users","dowell_users","1116","ABCDE","insert",field,"nil")
         print(res)
 
 
         # Cluster User data storage.
         field = {
-            "Username": random_user, 
-            "OS": operating_system, 
-            "Device": device_name, 
-            "Browser": browser, 
-            "Location": location, 
-            "Time":str(time), 
-            "IP": address_ip, 
+            "Username": random_user,
+            "OS": operating_system,
+            "Device": device_name,
+            "Browser": browser,
+            "Location": location,
+            "Time":str(time),
+            "IP": address_ip,
             "SessionID": "Link",
             "Connection":"Not get"
             }
-            
-        response = dowellconnection("login","bangalore","login","login","login","6752828281","ABCDE","insert",field,"nil") 
+
+        response = dowellconnection("login","bangalore","login","login","login","6752828281","ABCDE","insert",field,"nil")
         print(response)
 
         # BRAND DATA.
@@ -140,12 +140,12 @@ def create_Qr_Code(request):
 
         # Application Links
         brand_qr_code_url =  f"{base_url}brandurl/?brand={brand_name}&product={brand_product_name}&logo={brand_logo.decode()}"
-       
+
         # create QR from brand data.
-        qrgen(brand_logo_raw, f"{base_url}brandurl", brand_name.decode(), brand_product_name.decode(), f"media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
+        qrgen(brand_logo_raw, f"{base_url}brandurl", brand_name.decode(), brand_product_name.decode(), f"100077.pythonanywhere.com/media/qrcodes/{brand_logo_formatted}",brand_logo.decode())
 
 
-        # Save Brand Data  SQLite test DB 
+        # Save Brand Data  SQLite test DB
         brand = Brand(brand_name=brand_name, brand_product_name=brand_product_name, brand_logo=brand_logo_raw,  brand_qr_code_picture=f'media/qrcodes/{brand_logo_formatted}', brand_qr_code_url=brand_qr_code_url)
         brand.save()
 
@@ -159,16 +159,16 @@ def create_Qr_Code(request):
 
 
         # save the diff thumbnail for the brand logo
-        with Image.open(f"media/qrcodes/{brand_logo_formatted}") as image:
+        with Image.open(f"100077.pythonanywhere.com/media/qrcodes/{brand_logo_formatted}") as image:
             image.thumbnail((128,128))
-            image.save(f"media/qrcodes/thumbnails/{brand_logo_formatted}","JPEG")
-        with Image.open(f"media/brandlogos/{brand_logo_raw.name.replace(' ','_')}") as image:
+            image.save(f"100077.pythonanywhere.com/media/qrcodes/thumbnails/{brand_logo_formatted}","JPEG")
+        with Image.open(f"100077.pythonanywhere.com/media/brandlogos/{brand_logo_raw.name.replace(' ','_')}") as image:
             image.thumbnail((256,256))
-            image.save(f"media/brandlogos/thumbnails/{brand_logo_formatted}",quality=100)
+            image.save(f"100077.pythonanywhere.com/media/brandlogos/thumbnails/{brand_logo_formatted}",quality=100)
 
 
         brand_qr_code_url = f"{base_url}brandurl?brand={brand_name.decode()}&product={brand_product_name.decode()}&logo={brand_logo.decode()}"
-        
+
         context["brand_qr_code_url"] = brand_qr_code_url
         context["brand_qr_code_picture"] = brand_logo_formatted
         context["brand"] = brand_name_raw
@@ -180,14 +180,14 @@ def create_Qr_Code(request):
     return render(request, 'feedback/code.html')
 
 # Privacy Policy------------------------------------------------------
-    
+
 @xframe_options_exempt
 def policy(request):
     return render(request, 'feedback/policy.html',{})
 
 
 # Pass Brand Data to Template------------------------------------------------------
-    
+
 @csrf_exempt
 @xframe_options_exempt
 def showqr(request):
@@ -205,7 +205,7 @@ def showqr(request):
 
 
 # Send Email------------------------------------------------------
-    
+
 @csrf_exempt
 @xframe_options_exempt
 def emailqr(request):
@@ -230,7 +230,7 @@ def emailqr(request):
         htmlgen =  f"<div style='padding: 50px'>Dear {brand_user_name}, <br> QR code link  is <strong><a href='{brand_qr_code_picture_url}'>{brand_qr_code_picture_url}</a></strong> <br/> <h2><br> Embed this code to your website or copy and paste below your website</h2><br> <div style='text-align: center;'><img src='http://127.0.0.1:8000/media/qrcodes/{brand_qr_code_picture}' alt='qr_code'  style='height: 200px; width: 200px;' /></div><br><code>&lt;iframe width='300' height='500' style='background-color:white' src='{brand_qr_code_url}' style='-webkit-transform:scale(0.7);-moz-transform-scale(0.7);' FRAMEBORDER='no' BORDER='0' SCROLLING='no'&gt;&lt;/iframe&gt;</code><br><br><br> Best regards, <br> <strong>Voice of Customer Feedback Team</strong></div>"
         plain_message = strip_tags(htmlgen)
         from_email = settings.EMAIL_HOST_USER
-        
+
         # Send Email
         send_mail(subject, plain_message, from_email, [email], fail_silently=False, html_message=htmlgen)
 
@@ -239,7 +239,7 @@ def emailqr(request):
 
 
 # Recommend Friend------------------------------------------------------
-@csrf_exempt  
+@csrf_exempt
 @xframe_options_exempt
 def recommend(request):
     if request.method == 'POST':
